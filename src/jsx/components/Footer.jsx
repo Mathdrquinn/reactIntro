@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
+@connect((store) => {
+    return {
+        title: store.app.name,
+    };
+})
 export default class Footer extends Component {
     constructor() {
         super()

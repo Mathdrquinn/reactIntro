@@ -1,32 +1,56 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Footer from './Footer';
 import Header from './Header';
 
+import { fetchMuseumData } from '../../actions/museumActions';
+
+@connect((store) => {
+    const images = store.museum.data.map((child) => {
+        const image = {
+            id: child.data.id,
+            src: child.data.thumbnail,
+            title: child.data.title,
+            url: child.data.url,
+        }
+
+        return image;
+    });
+    return {
+        images,
+        loading: store.museum.loading,
+    }
+})
 export default class Layout extends Component {
     constructor() {
         super()
-        this.state = { title: 'Welcome' };
     }
     
     componentWillMount() {
-        
+        console.log('Layout Component');
+        this.props.dispatch(fetchMuseumData())
     }
     
     render() {
-        setTimeout(() => {
-            this.setState({ title: 'Welcome from React' });
-        }, 2000);
-        
-        // const hTitle = 'Header Title';
-        // const fTitle = 'Footer Title';
         return(
             <div>
-                <Header title={this.state.title}/>
-                <h1>Layout (Component)</h1>
-                <p>{this.state.name}</p>
-                <p>{4+5}</p>
-                <Footer title={this.state.title}/>
+                <Header/>
+                <h1>Layout</h1>
+                <p>
+                    {this.props.loading ?
+                        'loading...'
+                        :
+                        this.props.images.map((image) => {
+                            return (
+                                <a href={image.url} key={image.id}>
+                                    <img src={image.src} alt={image.title} />
+                                </a>
+                            );
+                        })
+                    }
+                </p>
+                <Footer/>
             </div>
         )
     }

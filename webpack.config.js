@@ -2,14 +2,14 @@ var debug = process.env.NODE_ENV !== "production";
 var webpack = require('webpack');
 var path = require("path");
 
-const SRC = path.join(__dirname, 'src', 'jsx');
+const SRC = path.join(__dirname, 'src');
 const APP = path.join(__dirname, 'app', 'js');
 
 
 module.exports = {
     context: __dirname,
     devtool: debug ? "inline-sourcemap" : null,
-    entry: path.join(SRC, 'index.jsx'),
+    entry: path.join(SRC, 'jsx', 'index.jsx'),
     module: {
         loaders: [
             {
@@ -20,7 +20,7 @@ module.exports = {
                     presets: ['react', 'es2015', 'stage-0'],
                     plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
                 }
-            }
+            },
         ],
     },
     resolve: {

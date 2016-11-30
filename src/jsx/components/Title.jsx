@@ -5,6 +5,10 @@ export default class Title extends Component {
         super()
     }
 
+    componentWillMount() {
+        console.log('Title Component');
+    }
+
     render() {
         const style = {
             color: 'blue',
